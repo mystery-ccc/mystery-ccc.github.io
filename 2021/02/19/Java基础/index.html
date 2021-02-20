@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/photo.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/photo.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/photo.jpg">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"mystery-ccc","root":"/","images":"/images","scheme":"Muse","version":"8.2.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
+  </script>
+<meta name="description" content="Java基础1、String、StringBuffer、StringBuider简单的来说：String 类中使⽤ final 关键字修饰字符数组来保存字符串， private final char value[] ，所以 String 对象是不可变的。 StringBuffer 对⽅法加了同步锁或者对调⽤的⽅法加了同步锁，所以是线程安全的。 StringBuilder 并没有对⽅法进⾏加同步锁，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java基础">
+<meta property="og:url" content="https://mystery-ccc/github.io/2021/02/19/Java%E5%9F%BA%E7%A1%80/index.html">
+<meta property="og:site_name" content="Moore&#39;s Blog">
+<meta property="og:description" content="Java基础1、String、StringBuffer、StringBuider简单的来说：String 类中使⽤ final 关键字修饰字符数组来保存字符串， private final char value[] ，所以 String 对象是不可变的。 StringBuffer 对⽅法加了同步锁或者对调⽤的⽅法加了同步锁，所以是线程安全的。 StringBuilder 并没有对⽅法进⾏加同步锁，">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://mystery-ccc/github/exception.PNG">
+<meta property="article:published_time" content="2021-02-19T14:13:37.000Z">
+<meta property="article:modified_time" content="2021-02-20T13:28:26.674Z">
+<meta property="article:author" content="Moore">
+<meta property="article:tag" content="复习">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://mystery-ccc/github/exception.PNG">
+
+
+<link rel="canonical" href="https://mystery-ccc/github.io/2021/02/19/Java%E5%9F%BA%E7%A1%80/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>Java基础 | Moore's Blog</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Moore's Blog</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Java%E5%9F%BA%E7%A1%80"><span class="nav-text">Java基础</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1%E3%80%81String%E3%80%81StringBuffer%E3%80%81StringBuider"><span class="nav-text">1、String、StringBuffer、StringBuider</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2%E3%80%81-%E4%B8%8E-equals"><span class="nav-text">2、&#x3D;&#x3D; 与 equals</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3%E3%80%81hashCode-%E4%B8%8E-equals"><span class="nav-text">3、hashCode 与 equals</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4%E3%80%81java%E5%80%BC%E4%BC%A0%E9%80%92"><span class="nav-text">4、java值传递</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5%E3%80%81%E8%BF%9B%E7%A8%8B%E3%80%81%E7%A8%8B%E5%BA%8F%E3%80%81%E7%BA%BF%E7%A8%8B"><span class="nav-text">5、进程、程序、线程</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6%E3%80%81%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%8A%B6%E6%80%81"><span class="nav-text">6、线程的基本状态</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#7%E3%80%81final%E5%85%B3%E9%94%AE%E5%AD%97"><span class="nav-text">7、final关键字</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#8%E3%80%81%E5%BC%82%E5%B8%B8"><span class="nav-text">8、异常</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Moore"
+      src="/img/photo.jpg">
+  <p class="site-author-name" itemprop="name">Moore</p>
+  <div class="site-description" itemprop="description">Moore的博客</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://mystery-ccc/github.io/2021/02/19/Java%E5%9F%BA%E7%A1%80/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/img/photo.jpg">
+      <meta itemprop="name" content="Moore">
+      <meta itemprop="description" content="Moore的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Moore's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Java基础
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-02-19 22:13:37" itemprop="dateCreated datePublished" datetime="2021-02-19T22:13:37+08:00">2021-02-19</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-02-20 21:28:26" itemprop="dateModified" datetime="2021-02-20T21:28:26+08:00">2021-02-20</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Java%E5%9F%BA%E7%A1%80/" itemprop="url" rel="index"><span itemprop="name">Java基础</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h4 id="Java基础"><a href="#Java基础" class="headerlink" title="Java基础"></a>Java基础</h4><h5 id="1、String、StringBuffer、StringBuider"><a href="#1、String、StringBuffer、StringBuider" class="headerlink" title="1、String、StringBuffer、StringBuider"></a>1、String、StringBuffer、StringBuider</h5><p>简单的来说：String 类中使⽤ final 关键字修饰字符数组来保存字符串， private final char value[] ，所以 String 对象是不可变的。</p>
+<p><strong>StringBuffer</strong> 对⽅法加了同步锁或者对调⽤的⽅法加了同步锁，所以是<strong>线程安全</strong>的。</p>
+<p><strong>StringBuilder</strong> 并没有对⽅法进⾏加同步锁，所以是<strong>⾮线程安全</strong>的。</p>
+<p>每次对 String 类型进⾏改变的时候，都会⽣成⼀个新的 String 对象，然后将指针指向新的 String对象。</p>
+<a id="more"></a>
+
+<p>StringBuffer 每次都会对 StringBuffer 对象本身进⾏操作，⽽不是⽣成新的对象并改变对象引⽤。</p>
+<p>相同情况下使⽤ StringBuilder 相⽐使⽤ StringBuffer 能获得 10%~15% 左右的性能提升，但要冒多线程不安全的⻛险。</p>
+<h5 id="2、-与-equals"><a href="#2、-与-equals" class="headerlink" title="2、== 与 equals"></a>2、== 与 equals</h5><p><strong>== :</strong> 它的作⽤是判断两个对象的地址是不是相等。即，判断两个对象是不是同⼀个对象(基本数据类型==⽐较的是值，引⽤数据类型==⽐较的是内存地址)。</p>
+<p><strong>equals() :</strong> 它的作⽤也是判断两个对象是否相等。但它⼀般有两种使⽤情况：</p>
+<ul>
+<li>情况 1：类没有覆盖 equals() ⽅法。则通过 equals() ⽐较该类的两个对象时，等价于通过<strong>“==”</strong>⽐较这两个对象。</li>
+<li>情况 2：类覆盖了 equals() ⽅法。⼀般，我们都覆盖 equals() ⽅法来⽐较两个对象的内容是否相等；若它们的内容相等，则返回 true (即，认为这两个对象相等)。</li>
+</ul>
+<p><strong>说明：</strong></p>
+<ul>
+<li>String 中的 equals ⽅法是被重写过的，因为 object 的 equals ⽅法是⽐较的对象的内存地址，⽽ String 的 equals ⽅法⽐较的是对象的值。</li>
+<li>当创建 String 类型的对象时，虚拟机会在常量池中查找有没有已经存在的值和要创建的值相同的对象，如果有就把它赋给当前引⽤。如果没有就在常量池中重新创建⼀个 String 对象。</li>
+</ul>
+<h5 id="3、hashCode-与-equals"><a href="#3、hashCode-与-equals" class="headerlink" title="3、hashCode 与 equals"></a>3、hashCode 与 equals</h5><p>hashCode() 的作⽤是获取哈希码，也称为散列码；它实际上是返回⼀个 int 整数。</p>
+<p>Object 的 hashcode()⽅法是本地⽅法，也就是⽤ c 语⾔或 c++ 实现的，该⽅法通常⽤来将对象的 内存地址 转换为整数之后返回。</p>
+<p><strong>为什么要有 hashCode?</strong></p>
+<blockquote>
+<p>《Head First Java》第⼆版</p>
+<p>当你把对象加⼊ HashSet 时， HashSet 会先计算对象的 hashcode 值来判断对象加⼊的位置，同时也会与其他已经加⼊的对象的 hashcode 值作⽐较，如果没有相符的 hashcode， HashSet会假设对象没有重复出现。但是如果发现有相同 hashcode 值的对象，这时会调⽤ equals() ⽅法来检查 hashcode 相等的对象是否真的相同。如果两者相同， HashSet 就不会让其加⼊操作成功。如果不同的话，就会重新散列到其他位置。</p>
+</blockquote>
+<p>减少 equals 的次数，提⾼执⾏速度。</p>
+<p><strong>为什么重写 equals 时必须重写 hashCode ⽅法？</strong></p>
+<blockquote>
+<p>hashCode() 的默认⾏为是对堆上的对象产⽣独特值。</p>
+<p>如果没有重写 hashCode() ，则该class 的两个对象⽆论如何都不会相等（即使这两个对象指向相同的数据）</p>
+</blockquote>
+<p><strong>为什么两个对象有相同的 hashcode 值，它们也不⼀定是相等的?</strong></p>
+<blockquote>
+<p>因为 hashCode() 所使⽤的杂凑算法也许刚好会让多个对象传回相同的杂凑值。越糟糕的杂凑算法越容易碰撞，但这也与数据值域分布的特性有关（所谓碰撞也就是指的是不同的对象得到相同的 hashCode) 。</p>
+</blockquote>
+<p>hashcode 只是⽤来缩⼩查找成本</p>
+<h5 id="4、java值传递"><a href="#4、java值传递" class="headerlink" title="4、java值传递"></a>4、java值传递</h5><blockquote>
+<p> Java 中⽅法参数的使⽤情况：</p>
+<ul>
+<li>⼀个⽅法不能修改⼀个基本数据类型的参数(即数值型或布尔型)。</li>
+<li>⼀个⽅法可以改变⼀个对象参数的状态。</li>
+<li>⼀个⽅法不能让对象参数引⽤⼀个新的对象。</li>
+</ul>
+</blockquote>
+<h5 id="5、进程、程序、线程"><a href="#5、进程、程序、线程" class="headerlink" title="5、进程、程序、线程"></a>5、进程、程序、线程</h5><p>进程是程序的⼀次执⾏过程，是系统运⾏程序的基本单位，因此进程是动态的。系统运⾏⼀个程序即是⼀个进程从创建，运⾏到消亡的过程。简单来说，⼀个进程就是⼀个执⾏中的程序，它在计算机中⼀个指令接着⼀个指令地执⾏着，同时，每个进程还占有某些系统资源如 CPU 时间，内存空间，⽂件，输⼊输出设备的使⽤权等等。换句话说，当程序在执⾏时，将会被操作系统载⼊内存中。</p>
+<p>程序是含有指令和数据的⽂件，被存储在磁盘或其他的数据存储设备中，也就是说程序是静态的代码。</p>
+<p>线程与进程相似，但线程是⼀个⽐进程更⼩的执⾏单位。⼀个进程在其执⾏的过程中可以产⽣多个线程。与进程不同的是同类的多个线程共享同⼀块内存空间和⼀组系统资源，所以系统在产⽣⼀个线程，或是在各个线程之间作切换⼯作时，负担要⽐进程⼩得多，也正因为如此，线程也被称为轻量级进程</p>
+<h5 id="6、线程的基本状态"><a href="#6、线程的基本状态" class="headerlink" title="6、线程的基本状态"></a>6、线程的基本状态</h5><table>
+<thead>
+<tr>
+<th>状态名称</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>NEW</td>
+<td>初始状态，线程被创建，没有调用start()方法</td>
+</tr>
+<tr>
+<td>RUNNABLE</td>
+<td>运行状态，Java线程将操作系统中的就绪和运行两种状态称作“运行中”</td>
+</tr>
+<tr>
+<td>BLOCKED</td>
+<td>阻塞状态，表示线程阻塞于此</td>
+</tr>
+<tr>
+<td>WAITING</td>
+<td>等待状态，表示线程进入等待状态，进入该状态表示当前线程需要等待其他线程做出特定动作（通知或中断）</td>
+</tr>
+<tr>
+<td>TIME_WAITING</td>
+<td>超市等待状态，该状态不同于WAITING，可以在指定的时间自行返回</td>
+</tr>
+<tr>
+<td>TERMINATED</td>
+<td>终止状态，表示当前线程执行完毕</td>
+</tr>
+</tbody></table>
+<h5 id="7、final关键字"><a href="#7、final关键字" class="headerlink" title="7、final关键字"></a>7、final关键字</h5><ul>
+<li><p>对于⼀个 final 变量，如果是基本数据类型的变量，则其数值⼀旦在初始化之后便不能更改；如果是引⽤类型的变量，则在对其初始化之后便不能再让其指向另⼀个对象。</p>
+</li>
+<li><p>当⽤ final 修饰⼀个类时，表明这个类不能被继承。final 类中的所有成员⽅法都会被隐式地指定为 final ⽅法。</p>
+</li>
+<li><p>使⽤ final ⽅法的原因有两个。第⼀个原因是把⽅法锁定，以防任何继承类修改它的含义；第⼆个原因是效率。在早期的 Java 实现版本中，会将 final ⽅法转为内嵌调⽤。但是如果⽅法过于庞⼤，可能看不到内嵌调⽤带来的任何性能提升（现在的 Java 版本已经不需要使⽤final ⽅法进⾏这些优化了）。类中所有的 private ⽅法都隐式地指定为 final。</p>
+</li>
+</ul>
+<h5 id="8、异常"><a href="#8、异常" class="headerlink" title="8、异常"></a>8、异常</h5><p><img src="/github/exception.PNG" alt="异常"></p>
+<p>在 Java 中，所有的异常都有⼀个共同的祖先 java.lang 包中的 Throwable 类。 Throwable 类有两个重要的⼦类 Exception （异常）和 Error （错误）。 Exception 能被程序本身处理( try-catch )， Error 是⽆法处理的(只能尽量避免)。</p>
+<p><strong>受检查异常</strong></p>
+<p>除了 RuntimeException 及其⼦类以外，其他的 Exception 类及其⼦类都属于检查异常 。常⻅的受检查异常有： IO 相关的异常、 ClassNotFoundException 、 SQLException …。</p>
+<p><strong>非受检查异常</strong></p>
+<p>RuntimeException 及其⼦类都统称为⾮受检查异常，例如： NullPointExecrption 、 NumberFormatException （字符串转换为数<br>字）、 ArrayIndexOutOfBoundsException （数组越界）、 ClassCastException （类型转换错误）、 ArithmeticException （算术错误）等。</p>
+<p><strong>异常处理</strong></p>
+<ul>
+<li>try 块： ⽤于捕获异常。其后可接零个或多个 catch 块，如果没有 catch 块，则必须跟⼀个 finally 块。</li>
+<li>catch 块： ⽤于处理 try 捕获到的异常。</li>
+<li>finally 块： ⽆论是否捕获或处理异常， finally 块⾥的语句都会被执⾏。当在 try 块或catch 块中遇到 return 语句时， finally 语句块将在⽅法返回之前被执⾏。</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%A4%8D%E4%B9%A0/" rel="tag"># 复习</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/02/19/%E6%A0%91%E7%9A%84%E5%AD%90%E7%BB%93%E6%9E%84/" rel="prev" title="树的子结构">
+                  <i class="fa fa-chevron-left"></i> 树的子结构
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/02/20/%E6%8A%8A%E6%95%B0%E7%BB%84%E6%8E%92%E6%88%90%E6%9C%80%E5%B0%8F%E7%9A%84%E6%95%B0/" rel="next" title="把数组排成最小的数">
+                  把数组排成最小的数 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Moore</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
